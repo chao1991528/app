@@ -1,0 +1,213 @@
+{include file="public/_meta"}
+    <title>添加用户 - H-ui.admin v3.1</title>
+    <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+    <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+</head>
+
+<body>
+    <article class="page-container">
+        <form action="" method="post" class="form form-horizontal" id="form-news-add">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="" placeholder="" id="title" name="title">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <span class="select-box">
+                        <select class="select" size="1" name="cate_id">
+                            <option value="">选择分类</option>
+                            <option value="1">体育</option>
+                            <option value="2">社会</option>
+                            <option value="3">娱乐</option>
+                        </select>
+                    </span> 
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">来源：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <span class="select-box">
+                        <select class="select" size="1" name="source_type">
+                            <option value="1">原创</option>
+                            <option value="0">网页</option>
+                        </select>
+                    </span> 
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>代表图：
+                </label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <span class="btn-upload form-group">
+                        <input class="input-text upload-url" type="hidden" name="image" id="image" readonly nullmsg="请添加附件！" style="width:200px">
+                        <a href="javascript:void(0);" class="btn btn-primary radius upload-btn" id="uploadImg">
+                            <i class="Hui-iconfont">&#xe642;</i> 选择图片
+                        </a>
+                        <img src="" class="hidden" id="viewImage" style="height: 50px;width: 50px;">
+                        <!-- <input type="file" multiple class="input-file"> -->
+                    </span> 
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>简介：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <textarea name="description" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" ></textarea>
+                    <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">详细内容：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <script id="editor" type="text/plain" style="width:100%;height:400px;"></script> 
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">是否推荐：</label>
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                    <span class="select-box">
+                        <select class="select" size="1" name="is_recommend">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">推荐到首页：</label>
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                    <span class="select-box">
+                        <select class="select" size="1" name="is_home_recommend">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </span>    
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">允许评论：</label>
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                    <span class="select-box">
+                        <select class="select" size="1" name="is_allow_comment">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </span>    
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">排序：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="填入数字,不填默认为100" name="sort" id="sort">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">状态：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <span class="select-box">
+        				<select class="select" size="1" name="status">
+        					<option value="1">启用</option>
+        					<option value="0">禁用</option>
+        					<option value="-1">删除</option>
+        				</select>
+    				</span> 
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </article>
+    {include file="public/_footer"}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var ue = UE.getEditor('editor',{textarea:'content'});
+        layui.use('upload', function(){
+            var upload = layui.upload;
+           
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#uploadImg', //绑定元素
+                url: upload_url, //上传接口
+                done: function(res){    
+                    $('#viewImage').attr('src', res.data.src);
+                    $('#viewImage').removeClass('hidden');
+                    $('#image').val(res.data.savePath);
+                },
+                error: function(){
+                    layer.msg('上传接口错误！');
+                }
+              });
+        });
+
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-news-add").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 20
+                },
+                cate_id: {
+                    required: true,
+                    number: true
+                },
+                image:{
+                    required:true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20
+                },
+                sort: {
+                    number: true,
+                },
+                status:{
+                	required: true,
+                    number:true
+                }
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function(form) {
+                if($('#image').val()){
+                    var ajax_option={
+                        success:function(data){
+                            if(data.code == 200){
+                                window.location.href = data.jump_url;
+                            }else{
+                                layer.msg(data.msg);
+                            }
+                        }
+                    }
+                    $(form).ajaxSubmit(ajax_option);    
+                }else{
+                    layer.msg('代表图必填！');
+                }
+            }
+        });
+    });
+    </script>
+    <!--/请在上方写此页面业务相关的脚本-->
+</body>
+
+</html>
