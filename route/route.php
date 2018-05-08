@@ -34,3 +34,4 @@ Route::get('api/:ver/rank', 'api/:ver.news/rank');
 Route::post('api/:ver/sendsms', 'api/:ver.sms/send');
 
 Route::post('api/:ver/login', 'api/:ver.login/doLogin');
+Route::post('api/:ver/info', 'api/:ver.user/info');

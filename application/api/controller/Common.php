@@ -20,22 +20,22 @@ class Common extends Controller {
     public function checkRequestAuth() {
         $headers = $this->request->header();
         // //基础参数验证
-        $validate = Validate::make([
-                    'sign' => 'require',
-                    'app-type' => 'require',
-                    'did' => 'require',
-                    'model' => 'require',
-                    'version' => 'require',
-                    'time' => 'require'
-        ]);
-        if (!$validate->check($headers)) {
-            throw new ApiException($validate->getError(), 400);
-        }
-        //sign验证
-        if (!MyEncrypt::checkSign($headers)) {
-            throw new ApiException('sign验证失败', 401);
-        }
-        cache($headers['sign'], 1, config('app.sign_cache_time'));
+        // $validate = Validate::make([
+        //             'sign' => 'require',
+        //             'app-type' => 'require',
+        //             'did' => 'require',
+        //             'model' => 'require',
+        //             'version' => 'require',
+        //             'time' => 'require'
+        // ]);
+        // if (!$validate->check($headers)) {
+        //     throw new ApiException($validate->getError(), 400);
+        // }
+        // //sign验证
+        // if (!MyEncrypt::checkSign($headers)) {
+        //     throw new ApiException('sign验证失败', 401);
+        // }
+        // cache($headers['sign'], 1, config('app.sign_cache_time'));
 
         $this->header = $headers;
     }

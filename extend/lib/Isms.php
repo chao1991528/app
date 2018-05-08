@@ -33,7 +33,7 @@ class Isms{
 	public function sendSms($phone = ''){
 		try {
 			$code = rand(1000, 9999);
-			cache($phone, $code, 60*5);
+			cache($phone, $code, config('app.phone_sms_out_time'));
 			return true;
 			
 		} catch (\Exception $e) {
