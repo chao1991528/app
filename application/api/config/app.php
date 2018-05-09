@@ -15,13 +15,13 @@
 
 return [
     // 异常处理handle类 留空使用 \think\exception\Handle
-    'exception_handle'       => '\apiExceptionHandle\ApiExceptionHandle',
+//    'exception_handle'       => '\apiExceptionHandle\ApiExceptionHandle',
     'aeskey' => 'ZYC_',
     'app_type' => ['ios', 'android'],
     'sign_expire_time' => 100000,
     'sign_cache_time' => 10,
 
     'user_token_out_day' => 7,
-    'phone_sms_out_time' => 10 * 60 * 60
-
+    'phone_sms_out_time' => 10 * 60 * 60,
+    
 ];
