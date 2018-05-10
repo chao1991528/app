@@ -37,3 +37,7 @@ Route::post('api/:ver/login', 'api/:ver.login/doLogin');
 Route::resource('api/:ver/user','api/:ver.user');
 //上传
 Route::post('api/:ver/upload', 'api/:ver.upload/save');
+//点赞
+Route::post('api/:ver/like', 'api/:ver.user/like');
+//取消点赞
+Route::delete('api/:ver/unlike', 'api/:ver.user/unlike');

@@ -35,4 +35,62 @@ class User extends AuthBase {
         }
     }
 
+    /*
+    *  用户点赞
+    */
+    public function like(){
+        $id = $this->request->post('id', 0 , 'intval');
+        if(empty($id)){
+            return responseData(0, 'id不存在', [], 404);    
+        }
+        $news = model('news')::get($id);
+        if(!$news){
+            return responseData(0, '文章不存在', [], 404);    
+        }
+        $data = [
+            'user_id' => $this->user->id,
+            'news_id' => $id
+        ];
+        $like = db('user_news_like')->where($data)->find();
+        if($like){
+            return responseData(0, '已经点过赞了', [], 500);
+        }else{
+            $res = db('user_news_like')->insert($data);
+            if($res){
+                model('news')::where('id',$id)->setInc('agree_count');
+                return responseData(1, '点赞成功');
+            }
+            return responseData(0, '点赞失败', [], 500);
+        }
+    }
+
+    /*
+    *  用户取消点赞
+    */
+    public function unlike(){
+        $id = $this->request->delete('id', 0 , 'intval');
+        if(empty($id)){
+            return responseData(0, 'id不存在', [], 404);    
+        }
+        $news = model('news')::get($id);
+        if(!$news){
+            return responseData(0, '文章不存在', [], 404);    
+        }
+        $data = [
+            'user_id' => $this->user->id,
+            'news_id' => $id
+        ];
+        $like = db('user_news_like')->where($data)->find();
+        if($like){
+            $res = db('user_news_like')->where($data)->delete();
+            if($res){
+                model('news')::where('id',$id)->setDec('agree_count');
+                return responseData(1, '取消点赞成功');
+            }
+            return responseData(0, '取消点赞失败', [], 500);
+        }else{           
+            return responseData(0, '你没点过赞', [], 500);
+        }
+    }
+
 }

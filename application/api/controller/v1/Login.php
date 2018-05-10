@@ -26,6 +26,20 @@ class Login extends Common
 
             //第一次登陆 是注册
             $token = MyEncrypt::setLoginToken($data['phone']);
+            $user = model('user')::get(['phone' => $data['phone'], 'status' => 1]);
+            if($user){
+                $user->time_out = strtotime('+'.config('app.user_token_out_day').' days');
+                $user->token = $token;
+                $res = $user->save();
+                if($res){
+                    $returnData = [
+                        'token' => Aes::encrypt($token.'|'.$user->id, config('app.aeskey'))
+                    ];
+                    return responseData(1, '登陆成功1', $returnData, 200);    
+                }
+                return responseData(0, '登陆信息更新失败', [], 403);                     
+            }
+
             $user_data = [
                 'token' => $token,
                 'time_out' => strtotime('+'.config('app.user_token_out_day').' days'),
