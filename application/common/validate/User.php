@@ -18,8 +18,9 @@ class User extends Validate {
         'status|状态' => 'number'
     ];
     protected $scene = [
-        'login_with_password' => ['phone', 'password'],
+        'register' => ['phone', 'code'],
         'login_with_sms' => ['phone', 'code'],
+        'login_with_password' => ['phone', 'password'],
         'update'
     ];
 

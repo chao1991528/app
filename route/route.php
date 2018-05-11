@@ -38,6 +38,10 @@ Route::resource('api/:ver/user','api/:ver.user');
 //上传
 Route::post('api/:ver/upload', 'api/:ver.upload/save');
 //点赞
-Route::post('api/:ver/like', 'api/:ver.user/like');
+Route::post('api/:ver/like', 'api/:ver.vote/like');
 //取消点赞
-Route::delete('api/:ver/unlike', 'api/:ver.user/unlike');
+Route::delete('api/:ver/unlike', 'api/:ver.vote/unlike');
+//注册
+Route::post('api/:ver/register', 'api/:ver.index/register');
+//查看是否点过赞
+Route::get('api/:ver/islike/:id', 'api/:ver.vote/islike');

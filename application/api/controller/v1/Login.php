@@ -11,8 +11,11 @@ class Login extends Common
     {
         if(request()->isPost()){
             $data = $this->request->post();
-
-            $result = $this->validate($data,'app\common\validate\User.login_with_sms');
+            if(empty($data['login_mode']) || !in_array($data['login_mode'], [1,2])){
+                 return responseData(0, '登陆方式有误', [], 403);
+            }
+            $validate = ($data['login_mode'] == 1) ? 'app\common\validate\User.login_with_sms' : 'app\common\validate\User.login_with_password';
+            $result = $this->validate($data , $validate);
 
             if(true !== $result){
                 // 验证失败 输出错误信息
@@ -20,14 +23,21 @@ class Login extends Common
             }
 
             //code客户端最好加密，后台收到后再解密
-            if(!Isms::getInstance()->checkSms($data['phone'], $data['code'])){
-                return responseData(0, '手机验证码错误', '', 404);
+            if(($data['login_mode'] == 1)){
+                if(!Isms::getInstance()->checkSms($data['phone'], $data['code'])){
+                    return responseData(0, '手机验证码错误', '', 403);
+                }
             }
 
-            //第一次登陆 是注册
-            $token = MyEncrypt::setLoginToken($data['phone']);
+            //登陆           
             $user = model('user')::get(['phone' => $data['phone'], 'status' => 1]);
             if($user){
+                if(($data['login_mode'] == 2)){
+                    if(Aes::decrypt($data['password'], config('app.aeskey'))){
+                        return responseData(0, '密码错误', '', 403);
+                    }
+                }
+                $token = MyEncrypt::setLoginToken($data['phone']);
                 $user->time_out = strtotime('+'.config('app.user_token_out_day').' days');
                 $user->token = $token;
                 $res = $user->save();
@@ -35,28 +45,12 @@ class Login extends Common
                     $returnData = [
                         'token' => Aes::encrypt($token.'|'.$user->id, config('app.aeskey'))
                     ];
-                    return responseData(1, '登陆成功1', $returnData, 200);    
+                    return responseData(1, '登陆成功', $returnData, 200);    
                 }
                 return responseData(0, '登陆信息更新失败', [], 403);                     
-            }
-
-            $user_data = [
-                'token' => $token,
-                'time_out' => strtotime('+'.config('app.user_token_out_day').' days'),
-                'username' => substr_replace($data['phone'],'****',3,4),
-                'status' => 1,
-                'phone' => $data['phone']
-            ];
-
-            $newUser = model('user')::create($user_data);
-            if($newUser){
-                $returnData = [
-                    'token' => Aes::encrypt($token.'|'.$newUser->id, config('app.aeskey'))
-                ];
-                return responseData(1, '登陆成功', $returnData, 200);
-            }
-            return responseData(0, '登陆失败', $returnData, 403);
+            }          
+            return responseData(0, '用户不存在', [], 403);
         }
-        return responseData(0, '非法访问', '', 403);
+        return responseData(0, '非法访问', '', 401);
     }
 }

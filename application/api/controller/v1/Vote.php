@@ -4,36 +4,7 @@ namespace app\api\controller\v1;
 
 use lib\Aes;
 
-class User extends AuthBase {
-
-    /**
-     * 获取用户信息
-     * 用户的信息需要加密传输
-     */
-    public function read() {
-        return responseData(1, 'ok', Aes::encrypt($this->user, config('app.aeskey')));
-    }
-
-    /*
-     * 修改数据
-     */
-
-    public function update() {
-        $params = $this->request->param();
-        $result = $this->validate($params, 'app\common\validate\User.update');
-        if (true !== $result) {
-            // 验证失败 输出错误信息
-            return responseData(0, $result, '', 403);
-        }
-        try {
-            if(!empty($params['password'])){
-                $params['password'] = Aes::encrypt($params['password'], config('app.aeskey'));
-            }
-            return model('user')->save($params, ['id' => $this->user->id]) ? responseData(1, 'ok') : responseData(0, '更新失败', [], 401);
-        } catch (\Exception $e) {
-            return responseData(0, $e->getMessage(), [], 500);
-        }
-    }
+class Vote extends AuthBase {
 
     /*
     *  用户点赞
@@ -91,6 +62,22 @@ class User extends AuthBase {
         }else{           
             return responseData(0, '你没点过赞', [], 500);
         }
+    }
+    /**
+     * 文章是否被该用户喜欢
+     */
+    public function isLike(){
+        $id = $this->request->param('id', 0, 'intval');
+        if(!$id){
+            return responseData(0, 'id不存在', [], 403);
+        }
+        $news = db('news')->find(['id'=>$id, 'status'=>1]);
+        if(!$news){
+            return responseData(0, '文章不存在', [], 403);   
+        }
+        
+        $like = db('user_news_like')->where(['news_id'=>$id, 'user_id'=> $this->user->id])->find();
+        return $like ? responseData(1, '已喜欢', ['islike' => 1]) : responseData(1, '没点过喜欢', ['is_like'=>0]);
     }
 
 }
