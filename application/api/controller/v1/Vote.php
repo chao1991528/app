@@ -2,8 +2,6 @@
 
 namespace app\api\controller\v1;
 
-use lib\Aes;
-
 class Vote extends AuthBase {
 
     /*

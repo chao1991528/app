@@ -45,3 +45,5 @@ Route::delete('api/:ver/unlike', 'api/:ver.vote/unlike');
 Route::post('api/:ver/register', 'api/:ver.index/register');
 //查看是否点过赞
 Route::get('api/:ver/islike/:id', 'api/:ver.vote/islike');
+//评论添加
+Route::post('api/:ver/comment', 'api/:ver.comment/save');

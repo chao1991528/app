@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-05-07 22:37:08
+Date: 2018-05-12 08:22:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,6 +61,29 @@ INSERT INTO `ent_category` VALUES ('1', '网页', null, null);
 INSERT INTO `ent_category` VALUES ('2', '原创', null, null);
 
 -- ----------------------------
+-- Table structure for ent_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `ent_comment`;
+CREATE TABLE `ent_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `news_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `pid` int(11) DEFAULT '0',
+  `status` tinyint(4) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ent_comment
+-- ----------------------------
+INSERT INTO `ent_comment` VALUES ('1', '10', '3', 'nice', '0', null, '1526048722', '1526048722');
+INSERT INTO `ent_comment` VALUES ('2', '10', '3', 'nice', '0', null, '1526048752', '1526048752');
+INSERT INTO `ent_comment` VALUES ('3', '10', '3', 'nice', '0', '0', '1526048777', '1526048777');
+
+-- ----------------------------
 -- Table structure for ent_news
 -- ----------------------------
 DROP TABLE IF EXISTS `ent_news`;
@@ -97,7 +120,7 @@ INSERT INTO `ent_news` VALUES ('6', 'fdfsf', '2', '20180422\\48fbead838642b621be
 INSERT INTO `ent_news` VALUES ('7', 'aa', '1', '20180422\\8b0a47476da280be2c82ed1aad5d7490.jpg', null, null, '0', '0', '0', '100', '1', '0', '0', '0', '1514373000', '1524584276', '-1');
 INSERT INTO `ent_news` VALUES ('8', 'fdfsf', '2', '20180422\\48fbead838642b621be430a36e05a8e9.jpg', '<p>fdaffds</p>', 'fdsaf', '0', '1', '0', '100', '0', '0', '0', '0', '1524061000', '1524371897', '1');
 INSERT INTO `ent_news` VALUES ('9', 'aa', '1', '20180422\\8b0a47476da280be2c82ed1aad5d7490.jpg', null, null, '0', '0', '0', '100', '0', '0', '0', '0', '1514362000', '1524370187', '0');
-INSERT INTO `ent_news` VALUES ('10', 'fdfsf', '1', '20180422\\48fbead838642b621be430a36e05a8e9.jpg', '<p>fdaffds</p>', 'fdsaf', '0', '1', '0', '100', '1', '0', '0', '0', '1524263000', '1524371897', '1');
+INSERT INTO `ent_news` VALUES ('10', 'fdfsf', '1', '20180422\\48fbead838642b621be430a36e05a8e9.jpg', '<p>fdaffds</p>', 'fdsaf', '0', '1', '0', '100', '1', '3', '0', '0', '1524263000', '1524371897', '1');
 
 -- ----------------------------
 -- Table structure for ent_user
@@ -118,10 +141,26 @@ CREATE TABLE `ent_user` (
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `phone_index` (`phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ent_user
+-- ----------------------------
+INSERT INTO `ent_user` VALUES ('3', '137****2150', null, '13714432150', 'ed535fb3f221357b19769590ade17d84', '1526653223', null, null, '', '1', '1525784643', '1526048423');
+
+-- ----------------------------
+-- Table structure for ent_user_news_like
+-- ----------------------------
+DROP TABLE IF EXISTS `ent_user_news_like`;
+CREATE TABLE `ent_user_news_like` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `news_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ent_user_news_like
 -- ----------------------------
 
 -- ----------------------------
